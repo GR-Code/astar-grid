@@ -45,7 +45,7 @@ class Node(object):
         return math.sqrt((x2-x1)**2 + (y2-y1)**2)
 
 class Nodes:
-    __slots__ = 'nodeGrid','startNode', 'endNode', 'size', 'w','b'
+    __slots__ = 'nodeGrid','startNode', 'endNode', 'w','b'
     def __init__(self, gridsize=20, nodesize=25):
         self.nodeGrid = [[Node() for i in range(gridsize)] for j in range(gridsize)]
         for x in range(gridsize):
@@ -54,6 +54,7 @@ class Nodes:
                 neighbourList = element.neighbours
 
                 # NSEW connections
+                
                 if y>0:
                     neighbourList.append(self.nodeGrid[x][y-1])
                 if y<gridsize-1:
@@ -62,6 +63,18 @@ class Nodes:
                     neighbourList.append(self.nodeGrid[x-1][y])
                 if x<gridsize-1:
                     neighbourList.append(self.nodeGrid[x+1][y])
+
+                # Diagonal connections (uncomment the lines below if needed)
+                
+                # if y>0 and x>0:
+                #     neighbourList.append(self.nodeGrid[x-1][y-1])
+                # if y>0 and x<gridsize-1:
+                #     neighbourList.append(self.nodeGrid[x+1][y-1])
+                # if y<gridsize-1 and x>0:
+                #     neighbourList.append(self.nodeGrid[x-1][y+1])
+                # if y<gridsize-1 and x<gridsize-1:
+                #     neighbourList.append(self.nodeGrid[x+1][y+1])
+
 
                 element.location = [x,y]
         
@@ -146,6 +159,6 @@ class Nodes:
 
 
 if __name__== "__main__": 
-    a_star = Nodes(15,25)
+    a_star = Nodes() # Add Grid size and Node size to __init__ arguments
     a_star.solve()
     a_star.update()
